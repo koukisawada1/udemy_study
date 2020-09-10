@@ -23,21 +23,35 @@
     <script>
         //グローバル変数
         var start;
+        var timer_id;
+
         document.getElementById('start_stop').addEventListener('click',
         function(){
-            start = new Date();
+            if (this.innerHTML === 'START') {
+                start = new Date();
 
-            //セットインターバル 間隔を指定する　10ミリ秒
-            //10ミリ秒ごとにgoTimerが呼び出される
-            setInterval(goTimer, 10);
+                //セットインターバル 間隔を指定する　10ミリ秒
+                //10ミリ秒ごとにgoTimerが呼び出される
+                timer_id = setInterval(goTimer, 10);
 
-            //stopボタンにする
-            //
-            this.innerHTML = 'STOP';
-            //
-            this.classList.remove('btn-primary');
-            //
-            this.classList.add('btn-danger');
+                //stopボタンにする
+                //thisとはここでは'start_stop'のこと
+                //ボタンの表示を変える
+                this.innerHTML = 'STOP';
+                //クラスを削除する
+                this.classList.remove('btn-primary');
+                //クラスを新たに追加する
+                this.classList.add('btn-danger');
+            } else {
+                //タイマーを止める
+                clearInterval(timer_id);
+                //STARTボタンに戻す
+                this.innerHTML = 'START';
+                this.classList.remove('btn-danger');
+                this.classList.add('btn-primary');
+            }
+
+
         });
         
         //一桁の時にゼロを表示する
