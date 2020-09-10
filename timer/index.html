@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="container">
+        <p id="timer">00:00:00</p>
+        
+        <div>
+            <button id="start_stop" class="btn btn-lg btn-primary">START</button>
+        </div>
+    </div>
+
+    <script>
+        //グローバル変数
+        var start;
+        document.getElementById('start_stop').addEventListener('click',
+        function(){
+            start = new Date();
+
+            //セットインターバル 間隔を指定する　10ミリ秒
+            //10ミリ秒ごとにgoTimerが呼び出される
+            setInterval(goTimer, 10);
+
+            //stopボタンにする
+            //
+            this.innerHTML = 'STOP';
+            //
+            this.classList.remove('btn-primary');
+            //
+            this.classList.add('btn-danger');
+        });
+        
+        //一桁の時にゼロを表示する
+        var addZero = function(value) {
+            if (value < 10) {
+                value = '0' + value;
+            }
+            return value;
+        }
+
+        var goTimer = function(){
+            var now = new Date();
+
+            var milli = now.getTime() - start.getTime();  
+            var seconds = Math.floor(milli / 1000);
+            //Math.floor 小数点以下を切り捨て表示
+            var minutes = Math.floor(seconds / 60);
+            //秒数を60で割ることで分を求める
+            var hours = Math.floor(minutes / 60);
+            //分数を60で割ることで時間を求める
+
+            //60秒になったらゼロに戻る
+            seconds = seconds - minutes * 60;
+            minutes = minutes - hours * 60;
+
+            //一桁の時にゼロを表示する
+            seconds = addZero(seconds);
+            minutes = addZero(minutes);
+            hours = addZero(hours);
+
+            document.getElementById('timer').innerHTML = hours + ':' + minutes + ':' + seconds;    
+        }
+
+        
+    </script>
+</body>
+</html>
