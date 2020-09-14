@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My Photos4</title>
+</head>
+<body>
+    <header>
+        <h1>My Phots4</h1>
+    </header>
+
+    <div class="container">
+        <div id="img_unit">
+            <div class="photo" v-for="photo in photos">
+                <!--v-for="photo in photos 繰り返し処理　photosという配列を一件ずつ取り出してphotoに分解していく　-->
+                <img :src="photo.path">
+                <div class="inner"><p>{{ photo.caption }}<span>{{ photo.name}}</span></p></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var app = new Vue({ //Vueのオブジェクトを作成
+            el: '#img_unit', // エレメントに'#img_unit'を指定
+            data: {
+                photos: [] //photos にからの配列を指定
+            },
+            created: function() {
+                var self = this; //this スコープ内の対象となるオブジェクト
+                $.getJSON('http://h2o-space.com/htmlbook/images.php',function(data) { 
+                //getJSON　JSONを取得するサーバー上のプログラムを指定
+                //function(data) { コールバック関数
+                    self.photos = data;
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
