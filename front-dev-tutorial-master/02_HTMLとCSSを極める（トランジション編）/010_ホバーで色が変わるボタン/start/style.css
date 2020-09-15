@@ -11,7 +11,7 @@
     font-weight: 600;
     cursor: pointer;
     /*0.3秒かけて色が変わる 移り変わりを定義する*/
-    transition: all 0.3s ease 0.3s;
+    transition: all 0.3s ease 0.3s; /*ease 0.3秒後に動く*/
 }
 .btn:hover {
     background-color: black;
